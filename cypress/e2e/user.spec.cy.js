@@ -16,7 +16,14 @@ describe('Orange HRM Tests', () => {
     genericFiled: ".oxd-input--active",
     dateField: "[placeholder='yyyy-dd-mm']",
     dateCloseButton: ".--close",
-    submitButton: "[type='submit']"
+    submitButton: "[type='submit']",
+    Nationality: ".oxd-select-wrapper",
+    statusMarital: ".oxd-select-wrapper",
+    dateBirth: "[placeholder='yyyy-dd-mm']",
+    gender: ".oxd-radio-wrapper",
+    bloodTypeField: ".oxd-select-wrapper",
+    Test_Field: "[options='']",
+    checkboxField: ".oxd-checkbox-input--active",
   }
 
 
@@ -36,9 +43,30 @@ describe('Orange HRM Tests', () => {
     cy.get(selectorsList.genericFiled).eq(5).clear().type('DriverLicenseTest').click()
     cy.get(selectorsList.genericFiled).eq(6).clear().type('2025-03-10').click
     cy.get(selectorsList.dateCloseButton).click()
+
+    
+    // -----------------------------------------------------------
+    cy.get(selectorsList.Nationality).eq(0).click()
+    cy.contains('Brazilian').click()
+    // -----------------------------------------------------------
+    cy.get(selectorsList.statusMarital).eq(1).click()
+    cy.contains('Single').click()
+    // -----------------------------------------------------------
+    cy.get(selectorsList.dateBirth).eq(1).clear().type('1992-08-27').click()
+    // -----------------------------------------------------------
+    cy.get(selectorsList.gender).eq(1).click()  
+    // -----------------------------------------------------------
+    cy.get(selectorsList.bloodTypeField).eq(2).click()
+    cy.contains('O-').click()
+    // -----------------------------------------------------------
+    cy.get(selectorsList.Test_Field).eq(0).click()
+    // -----------------------------------------------------------
+    cy.get('input[type="checkbox"]').eq(0).check({ force: true })
+    // -----------------------------------------------------------
+
+    
     cy.get(selectorsList.submitButton).eq(1).click()
     cy.get('body').should('contain', 'Successfully Saved')
-    
   })
 
 
