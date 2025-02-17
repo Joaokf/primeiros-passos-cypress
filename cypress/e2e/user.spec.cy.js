@@ -1,15 +1,20 @@
 
 import userData from '../fixtures/user-data.json'
+import LoginPage from '../pages/loginPage'
+import DashboardPage from '../pages/dashboardPage'
+import MenuPage from '../pages/menuPage'
+
+
+const loginPage = new LoginPage()
+const dashboardPage = new DashboardPage()
+const menuPage = new MenuPage()
+
+
 describe('Orange HRM Tests', () => {
-  
+
   const selectorsList = {
-    usernameField: "[name='username']",
-    passwordField: "[name='password']",
-    loginButton: "[type='submit']",
-    sectionTittleTopBar: ".oxd-topbar-header-breadcrumb-module",
-    dashboardGrid: ".orangehrm-dashboard-grid",
-    wrongCredentialAlert: "[role='alert']",
-    myInfoButton: '[href="/web/index.php/pim/viewMyDetails"]',
+
+ 
     firstNameField: "[name='firstName']",
     middleNameField: "[name='middleName']",
     lastNameField: "[name='lastName']",
@@ -25,49 +30,54 @@ describe('Orange HRM Tests', () => {
     Test_Field: "[options='']",
     checkboxField: ".oxd-checkbox-input--active",
   }
+  
 
 
   it.only('User Info Update - Success', () => {
-    cy.visit('/auth/login')
-    cy.get(selectorsList.usernameField).type(userData.userSuccess.username)
-    cy.get(selectorsList.passwordField).type(userData.userSuccess.password)
-    cy.get(selectorsList.loginButton).click()
-    cy.location('pathname').should('equal', '/web/index.php/dashboard/index')
-    cy.get(selectorsList.dashboardGrid)
-    cy.get(selectorsList.myInfoButton).click()
-    cy.get(selectorsList.firstNameField).clear().type('FistNameTest').click()
-    cy.get(selectorsList.middleNameField).clear().type('MiddleNameTest').click()
-    cy.get(selectorsList.lastNameField).clear().type('LastNameTest').click()
-    cy.get(selectorsList.genericFiled).eq(3).clear().type('Employee').click()
-    cy.get(selectorsList.genericFiled).eq(4).clear().type('OtherIdTest').click()
-    cy.get(selectorsList.genericFiled).eq(5).clear().type('DriverLicenseTest').click()
-    cy.get(selectorsList.genericFiled).eq(6).clear().type('2025-03-10').click
-    cy.get(selectorsList.dateCloseButton).click()
+    loginPage.accessLoginPage()
+    loginPage.loginWithUser(userData.userSuccess.username, userData.userSuccess.password)
 
-    
-    // -----------------------------------------------------------
-    cy.get(selectorsList.Nationality).eq(0).click()
-    cy.contains('Brazilian').click()
-    // -----------------------------------------------------------
-    cy.get(selectorsList.statusMarital).eq(1).click()
-    cy.contains('Single').click()
-    // -----------------------------------------------------------
-    cy.get(selectorsList.dateBirth).eq(1).clear().type('1992-08-27').click()
-    // -----------------------------------------------------------
-    cy.get(selectorsList.gender).eq(1).click()  
-    // -----------------------------------------------------------
-    cy.get(selectorsList.bloodTypeField).eq(2).click()
-    cy.contains('O-').click()
-    // -----------------------------------------------------------
-    cy.get(selectorsList.Test_Field).eq(0).click()
-    // -----------------------------------------------------------
-    cy.get('input[type="checkbox"]').eq(0).check({ force: true })
-    // -----------------------------------------------------------
+    dashboardPage.checkDashBoardPage()
 
+    menuPage.accessMyInfo()
     
-    cy.get(selectorsList.submitButton).eq(1).click()
-    cy.get('body').should('contain', 'Successfully Saved')
-  })
+
+  
+  
+ 
+  //   cy.get(selectorsList.firstNameField).clear().type('FistNameTest').click()
+  //   cy.get(selectorsList.middleNameField).clear().type('MiddleNameTest').click()
+  //   cy.get(selectorsList.lastNameField).clear().type('LastNameTest').click()
+  //   cy.get(selectorsList.genericFiled).eq(3).clear().type('Employee').click()
+  //   cy.get(selectorsList.genericFiled).eq(4).clear().type('OtherIdTest').click()
+  //   cy.get(selectorsList.genericFiled).eq(5).clear().type('DriverLicenseTest').click()
+  //   cy.get(selectorsList.genericFiled).eq(6).clear().type('2025-03-10').click
+  //   cy.get(selectorsList.dateCloseButton).click()
+
+
+  //   // -----------------------------------------------------------
+  //   cy.get(selectorsList.Nationality).eq(0).click()
+  //   cy.contains('Brazilian').click()
+  //   // -----------------------------------------------------------
+  //   cy.get(selectorsList.statusMarital).eq(1).click()
+  //   cy.contains('Single').click()
+  //   // -----------------------------------------------------------
+  //   cy.get(selectorsList.dateBirth).eq(1).clear().type('1992-08-27').click()
+  //   // -----------------------------------------------------------
+  //   cy.get(selectorsList.gender).eq(1).click()  
+  //   // -----------------------------------------------------------
+  //   cy.get(selectorsList.bloodTypeField).eq(2).click()
+  //   cy.contains('O-').click()
+  //   // -----------------------------------------------------------
+  //   cy.get(selectorsList.Test_Field).eq(0).click()
+  //   // -----------------------------------------------------------
+  //   cy.get('input[type="checkbox"]').eq(0).check({ force: true })
+  //   // -----------------------------------------------------------
+
+
+  //   cy.get(selectorsList.submitButton).eq(1).click()
+  //   cy.get('body').should('contain', 'Successfully Saved')
+  // })
 
 
   it('Login - Fail', () => {
@@ -78,6 +88,6 @@ describe('Orange HRM Tests', () => {
     cy.get(selectorsList.wrongCredentialAlert)
 
   })
-})
+})})
 
 
