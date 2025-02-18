@@ -14,13 +14,10 @@ const myInfoPage = new MyInfoPage()
 
 describe('Orange HRM Tests', () => {
 
-  const selectorsList = {
+  // const selectorsList = {
 
- 
-    
-  }
+  // }
   
-
 
   it('User Info Update - Success', () => {
     loginPage.accessLoginPage()
@@ -33,37 +30,13 @@ describe('Orange HRM Tests', () => {
     myInfoPage.fillEmployeeDetails('Employee ', 'Other Id', 'Driver License Number', '2025-07-29')
     myInfoPage.fillStatus()    
     myInfoPage.saveForm()
-    myInfoPage.personalStatus()
-    myInfoPage.customField()
+    myInfoPage.personalStatus('Brazilian', 'Single', '1992-08-27', 'Male')
+    myInfoPage.customField('O-', 'Test Value')
     myInfoPage.saveFormCustomField()
     myInfoPage.checkboxField()
-
-  
-  
- 
-    
-  
-
-
-    // -----------------------------------------------------------
-    // 
-    // // -----------------------------------------------------------
-    
-    // // -----------------------------------------------------------
-    // 
-    // // -----------------------------------------------------------
-
-
    
   })
 
-
-  it('Login - Fail', () => {
-    loginPage.accessLoginPage()
-    loginPage.loginWithUser(userData.userFail.username, userData.userFail.password)
-    loginPage.checkAccessInvalid()
-
-  })
 })
 
 

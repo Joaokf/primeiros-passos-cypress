@@ -15,23 +15,22 @@ class MyInfoPage {
             bloodTypeField: ".oxd-select-wrapper",
             Test_Field: "[options='']",
             checkboxField: ".oxd-checkbox-input--active",
-
         }
 
         return selectors
     }
 
     fillPersonalDetails(firstName, MiddleNameTest, LastNameTest) {
-        cy.get(this.selectorsList().firstNameField).clear().type(firstName).click()
-        cy.get(this.selectorsList().middleNameField).clear().type(MiddleNameTest).click()
-        cy.get(this.selectorsList().lastNameField).clear().type(LastNameTest).click()
+        cy.get(this.selectorsList().firstNameField).clear().type(firstName)
+        cy.get(this.selectorsList().middleNameField).clear().type(MiddleNameTest)
+        cy.get(this.selectorsList().lastNameField).clear().type(LastNameTest)
     }
 
     fillEmployeeDetails(Employee, OtherId, DriverLicenseNumber, expireDate) {
-        cy.get(this.selectorsList().genericFiled).eq(3).clear().type(Employee).click()
-        cy.get(this.selectorsList().genericFiled).eq(4).clear().type(OtherId).click()
-        cy.get(this.selectorsList().genericFiled).eq(5).clear().type(DriverLicenseNumber).click()
-        cy.get(this.selectorsList().genericFiled).eq(6).clear().type(expireDate).click()
+        cy.get(this.selectorsList().genericFiled).eq(3).clear().type(Employee)
+        cy.get(this.selectorsList().genericFiled).eq(4).clear().type(OtherId)
+        cy.get(this.selectorsList().genericFiled).eq(5).clear().type(DriverLicenseNumber)
+        cy.get(this.selectorsList().genericFiled).eq(6).clear().type(expireDate)
         cy.get(this.selectorsList().dateCloseButton).click()
     }
 
@@ -40,38 +39,43 @@ class MyInfoPage {
         cy.get('body').should('contain', 'Successfully Saved')
     }
 
-    fillStatus() {
+    fillStatus() {}
 
-    }
-
-    personalStatus() {
+    personalStatus(Nationality, statusMarital, dateBirth, gender) {
+        // Preencher a nacionalidade
         cy.get(this.selectorsList().Nationality).eq(0).click()
-        cy.contains('Brazilian').click()
-        // -----------------------------------------------------------
+        cy.contains(Nationality).click()
+    
+        // Selecionar o estado civil
         cy.get(this.selectorsList().statusMarital).eq(1).click()
-        cy.contains('Single').click()
-        // -----------------------------------------------------------
-        cy.get(this.selectorsList().dateBirth).eq(1).clear().type('1992-08-27').click()
-        // -----------------------------------------------------------
-        cy.get(this.selectorsList().gender).eq(1).click()
+        cy.contains(statusMarital).click()
+    
+        // Preencher a data de nascimento
+        cy.get(this.selectorsList().dateBirth).eq(1).clear().type(dateBirth, { force: true });
+        cy.wait(500); // Aguarda 500ms antes de tentar novamente
+                
+        // Selecionar o gênero
+        cy.get(this.selectorsList().gender).eq(1).click() // Se necessário, ajustar para selecionar corretamente o gênero
     }
+    
 
-    customField() {
-        cy.get(this.selectorsList() .bloodTypeField).eq(2).click()
-        cy.contains('O-').click()
-        cy.get(this.selectorsList() .Test_Field).eq(0).click()
+    customField(bloodTypeField, Test_Field) {
+        cy.get(this.selectorsList().bloodTypeField).eq(2).click() // Abre o campo de tipo sanguíneo
+        cy.contains(bloodTypeField).click() // Seleciona a opção, por exemplo, 'O-'
+        
+        cy.get(this.selectorsList().Test_Field).eq(0).clear().type(Test_Field).click() // Preenche o campo Test_Field com o valor desejado
     }
+    
+    
 
     saveFormCustomField() {
         cy.get(this.selectorsList().submitButton).eq(1).click()
         cy.get('body').should('contain', 'Successfully Saved')
     }
 
-    checkboxField(){
+    checkboxField() {
         cy.get('input[type="checkbox"]').eq(0).check({ force: true })
     }
 }
 
 export default MyInfoPage
-
-
